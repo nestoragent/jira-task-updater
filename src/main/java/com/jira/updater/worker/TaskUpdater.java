@@ -56,6 +56,11 @@ public class TaskUpdater extends Page {
             fill_field(Init.getDriver().findElement(By.cssSelector(cssComment)), task.getComment());
             press_button(Init.getDriver().findElement(By.cssSelector(cssAddSubmitComment)));
             waitForVisibilityOf(By.id(idAddComment));
+            try {
+                Thread.sleep(5 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
