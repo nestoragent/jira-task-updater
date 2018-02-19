@@ -101,9 +101,8 @@ public class Page {
         actions.sendKeys(key).perform();
     }
 
-    public void press_button_by_js(WebElement element) throws InterruptedException {
+    public void press_button_by_js(WebElement element) {
         ((JavascriptExecutor) Init.getDriver()).executeScript("arguments[0].click();", element);
-        Thread.sleep(1000);
     }
 
 }
