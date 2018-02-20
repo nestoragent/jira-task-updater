@@ -35,7 +35,7 @@ public class TaskUpdater extends Page {
         synchronized (this) {
             try {
                 Init.getDriver().get(Props.get("applications.url") + "browse/" + task.getTicket());
-                waitClickable(By.id(idDivStatus));
+                waitVisible(By.id(idDivStatus));
                 press_button(Init.getDriver().findElement(By.id(idDivStatus)));
                 waitForVisibilityOf(By.cssSelector(cssInputStatus));
                 fill_field(Init.getDriver().findElement(By.cssSelector(cssInputStatus)), task.getStatus());
@@ -80,35 +80,35 @@ public class TaskUpdater extends Page {
         Init.getDriver().get(url);
         try {
             waitForVisibilityOf(By.id(idUsername));
-            fill_field(Init.getDriver().findElement(By.id(idUsername)), "login");
+            fill_field(Init.getDriver().findElement(By.id(idUsername)), System.getProperty("login"));
             sleep(2);
             press_button(Init.getDriver().findElement(By.id(idLoginSubmit)));
             waitForVisibilityOf(By.cssSelector(cssInputLoginMicrosoft));
-            fill_field(Init.getDriver().findElement(By.cssSelector(cssInputLoginMicrosoft)), "login");
+            fill_field(Init.getDriver().findElement(By.cssSelector(cssInputLoginMicrosoft)), System.getProperty("login"));
             sleep(2);
             press_button(Init.getDriver().findElement(By.cssSelector(cssSubmitLoginMicrosoft)));
             waitForVisibilityOf(By.cssSelector(cssInputPasswordMicrosoft));
-            fill_field(Init.getDriver().findElement(By.cssSelector(cssInputPasswordMicrosoft)), "pass");
+            fill_field(Init.getDriver().findElement(By.cssSelector(cssInputPasswordMicrosoft)), System.getProperty("password"));
             sleep(2);
             Init.getDriver().findElement(By.cssSelector(cssInputPasswordMicrosoft)).submit();
 
-            waitForVisibilityOf(By.id(idFrame));
+            sleep(10);
+            waitVisible(By.id(idFrame));
             Init.getDriver().switchTo().frame(Init.getDriver().findElement(By.id(idFrame)));
             Init.getDriver().switchTo().activeElement();
             sleep(5);
-            waitForVisibilityOf(By.cssSelector(cssButtonPushButton));
             waitVisible(By.cssSelector(cssButtonPushButton));
-            press_button(Init.getDriver().findElement(By.cssSelector(cssButtonPushButton)));
+//            press_button(Init.getDriver().findElement(By.cssSelector(cssButtonPushButton)));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         List<WebElement> pushes = Init.getDriver().findElements(By.cssSelector(cssButtonPushButton));
         int i = 0;
         while (!pushes.isEmpty() && i < 50) {
+            press_button(pushes.get(0));
             try {
-                System.out.println("wotk i: " + i);
-//            Thread.sleep(5 * 1000 * 60);
-                Thread.sleep(10 * 1000);
+                Thread.sleep(5 * 1000 * 60);
+//                Thread.sleep(50 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -117,5 +117,10 @@ public class TaskUpdater extends Page {
         }
         waitVisible(By.cssSelector(cssSubmitLoginMicrosoft));
         press_button(Init.getDriver().findElement(By.cssSelector(cssSubmitLoginMicrosoft)));
+        try {
+            sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

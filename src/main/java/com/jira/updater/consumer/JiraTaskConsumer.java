@@ -26,8 +26,9 @@ public class JiraTaskConsumer implements Runnable {
                     Thread.sleep(10 * 1000);
                 else {
                     Task task = sharedQueue.take();
-                    System.out.println("work with task: " + task);
+                    System.out.println("Work with task: " + task);
                     taskUpdater.updateTicket(task);
+                    System.out.println("Done task: " + task);
                 }
             } catch (InterruptedException ex) {
                 System.err.println(JiraTaskConsumer.class.getName());
