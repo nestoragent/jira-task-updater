@@ -5,11 +5,13 @@ import com.jira.updater.lib.Page;
 import com.jira.updater.lib.Props;
 import com.jira.updater.model.Task;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by nestor on 17.02.2018.
@@ -34,6 +36,12 @@ public class TaskUpdater extends Page {
     public void updateTicket(Task task) {
         synchronized (this) {
             try {
+                if (Init.getStash().get("cookies") != null) {
+                    Init.getDriver().get("https://www.google.com/");
+                    System.out.println("set cookies: " + Init.getStash().get("cookies"));
+                    Set<Cookie> cookieSet = (Set<Cookie>) Init.getStash().get("cookies");
+                    cookieSet.forEach(cookie -> Init.getDriver().manage().addCookie(cookie));
+                }
                 Init.getDriver().get(Props.get("applications.url") + "browse/" + task.getTicket());
                 waitVisible(By.id(idDivStatus));
                 press_button(Init.getDriver().findElement(By.id(idDivStatus)));
@@ -123,5 +131,6 @@ public class TaskUpdater extends Page {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Init.getStash().put("cookies", Init.getDriver().manage().getCookies());
     }
 }
