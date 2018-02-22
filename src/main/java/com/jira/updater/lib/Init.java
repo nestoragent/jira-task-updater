@@ -18,6 +18,7 @@ import com.jira.updater.lib.util.AutotestError;
 import com.jira.updater.lib.util.OsCheck;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -216,8 +217,8 @@ public class Init {
             } catch (Exception | Error e) {
                 System.err.println("No alert opened. Closing webdriver.");
             }
-            Set<String> windowsHandlerSet = Init.getDriver().getWindowHandles();
             try {
+                Set<String> windowsHandlerSet = Init.getDriver().getWindowHandles();
                 if (windowsHandlerSet.size() > 2) {
                     windowsHandlerSet.forEach((winHandle) -> {
                         driver.switchTo().window(winHandle);
@@ -230,6 +231,11 @@ public class Init {
 
             } catch (Exception e) {
                 System.err.println("Failed to kill all of the browser windows. Error message = " + e.getMessage());
+                try {
+                    Runtime.getRuntime().exec("TASKKILL /IM chrome.exe /F");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
         try {
