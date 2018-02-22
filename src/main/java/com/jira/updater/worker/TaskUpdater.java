@@ -108,8 +108,8 @@ public class TaskUpdater extends Page {
         while (!pushes.isEmpty() && i < 50) {
             press_button(pushes.get(0));
             try {
-                Thread.sleep(5 * 1000 * 60);
-//                Thread.sleep(50 * 1000);
+//                Thread.sleep(5 * 1000 * 60);
+                Thread.sleep(50 * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
