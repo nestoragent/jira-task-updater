@@ -87,7 +87,8 @@ public class TaskUpdater extends Page {
             fill_field(Init.getDriver().findElement(By.cssSelector(cssInputLoginMicrosoft)), System.getProperty("login"));
             sleep(2);
             press_button(Init.getDriver().findElement(By.cssSelector(cssSubmitLoginMicrosoft)));
-            waitForVisibilityOf(By.cssSelector(cssInputPasswordMicrosoft));
+            waitVisible(By.cssSelector(cssInputPasswordMicrosoft));
+            sleep(2);
             fill_field(Init.getDriver().findElement(By.cssSelector(cssInputPasswordMicrosoft)), System.getProperty("password"));
             sleep(2);
             Init.getDriver().findElement(By.cssSelector(cssInputPasswordMicrosoft)).submit();
